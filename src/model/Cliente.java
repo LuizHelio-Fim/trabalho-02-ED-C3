@@ -59,7 +59,7 @@ public class Cliente {
 	public String toString() {
 		return "\nNome: " + nome + "\n"
 				+ "CPF: " + CPF + "\n"
-				+ "Idade:" + idade + "\n"
+				+ "Idade: " + idade + "\n"
 				+ "Sexo: " + sexo + "\n"
 				+ "Saldo: " + saldo;
 	}
