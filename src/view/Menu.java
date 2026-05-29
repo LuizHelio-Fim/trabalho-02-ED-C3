@@ -158,7 +158,7 @@ public class Menu {
         int min = lerInteiro("Idade mínima: ");
         int max = lerInteiro("Idade máxima: ");
 
-        service.listarFaixaEtaria(min, max);
+        System.out.println(service.listarFaixaEtaria(min, max));
     }
 
     private void clienteMaisNovo() {
