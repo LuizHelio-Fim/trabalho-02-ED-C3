@@ -68,8 +68,8 @@ public class ClienteService {
 		return arvore.clienteMaisVelho();
 	}
 	
-	public void listarFaixaEtaria(int min, int max) {
-		arvore.listarFaixaEtaria(min, max);
+	public String listarFaixaEtaria(int min, int max) {
+		return arvore.listarFaixaEtaria(min, max);
 	}
 	
 	public void listarClientes() {
