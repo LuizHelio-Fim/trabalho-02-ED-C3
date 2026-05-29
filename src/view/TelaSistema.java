@@ -567,7 +567,18 @@ public class TelaSistema extends JFrame {
 
 		JTextField txtIdade = criarCampo();
 
-		JTextField txtSexo = criarCampo();
+		JComboBox<String> sexoBox =
+		        new JComboBox<>(
+		                new String[]{"", "M", "F"}
+		        );
+
+		sexoBox.setMaximumSize(
+		        new Dimension(350, 42)
+		);
+
+		sexoBox.setFont(
+		        new Font("SansSerif", Font.PLAIN, 16)
+		);
 
 		JTextField txtSaldo = criarCampo();
 
@@ -630,12 +641,14 @@ public class TelaSistema extends JFrame {
 				 * SEXO
 				 */
 
+				String sexoSelecionado =
+				        sexoBox.getSelectedItem()
+				                .toString();
+
 				char sexo =
-						txtSexo.getText().isBlank()
-						? cliente.getSexo()
-								: txtSexo.getText()
-								.toUpperCase()
-								.charAt(0);
+				        sexoSelecionado.isBlank()
+				        ? cliente.getSexo()
+				        : sexoSelecionado.charAt(0);
 
 				if (sexo != 'M'
 						&& sexo != 'F') {
@@ -696,10 +709,10 @@ public class TelaSistema extends JFrame {
 				);
 
 		adicionarCampo(
-				panel,
-				"Novo sexo (M/F)",
-				txtSexo
-				);
+		        panel,
+		        "Novo sexo (M/F)",
+		        sexoBox
+		);
 
 		adicionarCampo(
 				panel,
