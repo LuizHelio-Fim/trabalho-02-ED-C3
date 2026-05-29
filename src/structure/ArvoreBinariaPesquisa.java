@@ -5,305 +5,309 @@ import model.No;
 
 public class ArvoreBinariaPesquisa {
 
-    private No raiz;
-    private int quantNos;
+	private No raiz;
+	private int quantNos;
 
-    public ArvoreBinariaPesquisa() {
-        this.raiz = null;
-        this.quantNos = 0;
-    }
+	public ArvoreBinariaPesquisa() {
+		this.raiz = null;
+		this.quantNos = 0;
+	}
 
-    public boolean eVazia() {
-        return this.raiz == null;
-    }
+	public boolean eVazia() {
+		return this.raiz == null;
+	}
 
-    public No getRaiz() {
-        return raiz;
-    }
+	public No getRaiz() {
+		return raiz;
+	}
 
-    public int getQuantNos() {
-        return quantNos;
-    }
+	public int getQuantNos() {
+		return quantNos;
+	}
 
-    public boolean inserir(Cliente cliente) {
+	public boolean inserir(Cliente cliente) {
 
-        if (pesquisarNome(cliente.getNome()) != null) {
-            return false;
-        }
+		if (pesquisarNome(cliente.getNome()) != null) {
+			return false;
+		}
 
-        if (pesquisarCPF(cliente.getCPF())) {
-            return false;
-        }
+		if (pesquisarCPF(cliente.getCPF())) {
+			return false;
+		}
 
-        raiz = inserir(cliente, raiz);
-        quantNos++;
+		raiz = inserir(cliente, raiz);
+		quantNos++;
 
-        return true;
-    }
-    private No inserir(Cliente cliente, No no) {
+		return true;
+	}
+	private No inserir(Cliente cliente, No no) {
 
-        if (no == null) {
-            return new No(cliente);
-        }
+		if (no == null) {
+			return new No(cliente);
+		}
 
-        if (cliente.getNome().compareToIgnoreCase(no.getInfo().getNome()) < 0) {
-            no.setEsq(inserir(cliente, no.getEsq()));
-        } else {
-            no.setDir(inserir(cliente, no.getDir()));
-        }
+		if (cliente.getNome().compareToIgnoreCase(no.getInfo().getNome()) < 0) {
+			no.setEsq(inserir(cliente, no.getEsq()));
+		} else {
+			no.setDir(inserir(cliente, no.getDir()));
+		}
 
-        return no;
-    }
+		return no;
+	}
 
-    public Cliente pesquisarNome(String nome) {
-        No resultado = pesquisarNome(nome, raiz);
+	public Cliente pesquisarNome(String nome) {
+		No resultado = pesquisarNome(nome, raiz);
 
-        if (resultado != null) {
-            return resultado.getInfo();
-        }
+		if (resultado != null) {
+			return resultado.getInfo();
+		}
 
-        return null;
-    }
-    private No pesquisarNome(String nome, No no) {
+		return null;
+	}
+	private No pesquisarNome(String nome, No no) {
 
-        if (no == null) {
-            return null;
-        }
+		if (no == null) {
+			return null;
+		}
 
-        int comparacao = nome.compareToIgnoreCase(no.getInfo().getNome());
+		int comparacao = nome.compareToIgnoreCase(no.getInfo().getNome());
 
-        if (comparacao == 0) {
-            return no;
-        }
+		if (comparacao == 0) {
+			return no;
+		}
 
-        if (comparacao < 0) {
-            return pesquisarNome(nome, no.getEsq());
-        }
+		if (comparacao < 0) {
+			return pesquisarNome(nome, no.getEsq());
+		}
 
-        return pesquisarNome(nome, no.getDir());
-    }
+		return pesquisarNome(nome, no.getDir());
+	}
 
-    public boolean pesquisarCPF(String cpf) {
-        return pesquisarCPF(cpf, raiz);
-    }
-    private boolean pesquisarCPF(String cpf, No no) {
+	public boolean pesquisarCPF(String cpf) {
+		return pesquisarCPF(cpf, raiz);
+	}
+	private boolean pesquisarCPF(String cpf, No no) {
 
-        if (no == null) {
-            return false;
-        }
+		if (no == null) {
+			return false;
+		}
 
-        if (no.getInfo().getCPF().equals(cpf)) {
-            return true;
-        }
+		if (no.getInfo().getCPF().equals(cpf)) {
+			return true;
+		}
 
-        return pesquisarCPF(cpf, no.getEsq())
-                || pesquisarCPF(cpf, no.getDir());
-    }
+		return pesquisarCPF(cpf, no.getEsq())
+				|| pesquisarCPF(cpf, no.getDir());
+	}
 
-    public boolean remover(String nome) {
+	public boolean remover(String nome) {
 
-        if (pesquisarNome(nome) == null) {
-            return false;
-        }
+		if (pesquisarNome(nome) == null) {
+			return false;
+		}
 
-        raiz = remover(nome, raiz);
-        quantNos--;
+		raiz = remover(nome, raiz);
+		quantNos--;
 
-        return true;
-    }
-    private No remover(String nome, No no) {
+		return true;
+	}
+	private No remover(String nome, No no) {
 
-        if (no == null) {
-            return null;
-        }
+		if (no == null) {
+			return null;
+		}
 
-        int comparacao = nome.compareToIgnoreCase(no.getInfo().getNome());
+		int comparacao = nome.compareToIgnoreCase(no.getInfo().getNome());
 
-        if (comparacao < 0) {
+		if (comparacao < 0) {
 
-            no.setEsq(remover(nome, no.getEsq()));
+			no.setEsq(remover(nome, no.getEsq()));
 
-        } else if (comparacao > 0) {
+		} else if (comparacao > 0) {
 
-            no.setDir(remover(nome, no.getDir()));
+			no.setDir(remover(nome, no.getDir()));
 
-        } else {
+		} else {
 
-            // nó folha
-            if (no.getEsq() == null && no.getDir() == null) {
-                return null;
-            }
+			// nó folha
+			if (no.getEsq() == null && no.getDir() == null) {
+				return null;
+			}
 
-            // um filho
-            if (no.getEsq() == null) {
-                return no.getDir();
-            }
+			// um filho
+			if (no.getEsq() == null) {
+				return no.getDir();
+			}
 
-            if (no.getDir() == null) {
-                return no.getEsq();
-            }
+			if (no.getDir() == null) {
+				return no.getEsq();
+			}
 
-            // dois filhos
-            No maiorEsquerda = maiorEsquerda(no.getEsq());
+			// dois filhos
+			No maiorEsquerda = maiorEsquerda(no.getEsq());
 
-            no.setInfo(maiorEsquerda.getInfo());
+			no.setInfo(maiorEsquerda.getInfo());
 
-            no.setEsq(remover(maiorEsquerda.getInfo().getNome(), no.getEsq()));
-        }
+			no.setEsq(remover(maiorEsquerda.getInfo().getNome(), no.getEsq()));
+		}
 
-        return no;
-    }
+		return no;
+	}
 
-    private No maiorEsquerda(No no) {
+	private No maiorEsquerda(No no) {
 
-        while (no.getDir() != null) {
-            no = no.getDir();
-        }
+		while (no.getDir() != null) {
+			no = no.getDir();
+		}
 
-        return no;
-    }
+		return no;
+	}
 
 
-    public int contarMasculino() {
-        return contarMasculino(raiz);
-    }
-    private int contarMasculino(No no) {
+	public int contarMasculino() {
+		return contarMasculino(raiz);
+	}
+	private int contarMasculino(No no) {
 
-        if (no == null) {
-            return 0;
-        }
+		if (no == null) {
+			return 0;
+		}
 
-        int contador = 0;
+		int contador = 0;
 
-        if (Character.toUpperCase(no.getInfo().getSexo()) == 'M') {
-            contador++;
-        }
+		if (Character.toUpperCase(no.getInfo().getSexo()) == 'M') {
+			contador++;
+		}
 
-        contador += contarMasculino(no.getEsq());
-        contador += contarMasculino(no.getDir());
+		contador += contarMasculino(no.getEsq());
+		contador += contarMasculino(no.getDir());
 
-        return contador;
-    }
+		return contador;
+	}
 
-    public int contarFeminino() {
-        return contarFeminino(raiz);
-    }
+	public int contarFeminino() {
+		return contarFeminino(raiz);
+	}
 
-    private int contarFeminino(No no) {
+	private int contarFeminino(No no) {
 
-        if (no == null) {
-            return 0;
-        }
+		if (no == null) {
+			return 0;
+		}
 
-        int contador = 0;
+		int contador = 0;
 
-        if (Character.toUpperCase(no.getInfo().getSexo()) == 'F') {
-            contador++;
-        }
+		if (Character.toUpperCase(no.getInfo().getSexo()) == 'F') {
+			contador++;
+		}
 
-        contador += contarFeminino(no.getEsq());
-        contador += contarFeminino(no.getDir());
+		contador += contarFeminino(no.getEsq());
+		contador += contarFeminino(no.getDir());
 
-        return contador;
-    }
+		return contador;
+	}
 
-    public Cliente clienteMaisNovo() {
+	public Cliente clienteMaisNovo() {
 
-        if (raiz == null) {
-            return null;
-        }
+		if (raiz == null) {
+			return null;
+		}
 
-        return clienteMaisNovo(raiz, raiz.getInfo());
-    }
-    private Cliente clienteMaisNovo(No no, Cliente menor) {
+		return clienteMaisNovo(raiz, raiz.getInfo());
+	}
+	private Cliente clienteMaisNovo(No no, Cliente menor) {
 
-        if (no == null) {
-            return menor;
-        }
+		if (no == null) {
+			return menor;
+		}
 
-        if (no.getInfo().getIdade() < menor.getIdade()) {
-            menor = no.getInfo();
-        }
+		if (no.getInfo().getIdade() < menor.getIdade()) {
+			menor = no.getInfo();
+		}
 
-        menor = clienteMaisNovo(no.getEsq(), menor);
-        menor = clienteMaisNovo(no.getDir(), menor);
+		menor = clienteMaisNovo(no.getEsq(), menor);
+		menor = clienteMaisNovo(no.getDir(), menor);
 
-        return menor;
-    }
+		return menor;
+	}
 
-    public Cliente clienteMaisVelho() {
+	public Cliente clienteMaisVelho() {
 
-        if (raiz == null) {
-            return null;
-        }
+		if (raiz == null) {
+			return null;
+		}
 
-        return clienteMaisVelho(raiz, raiz.getInfo());
-    }
-    private Cliente clienteMaisVelho(No no, Cliente maior) {
+		return clienteMaisVelho(raiz, raiz.getInfo());
+	}
+	private Cliente clienteMaisVelho(No no, Cliente maior) {
 
-        if (no == null) {
-            return maior;
-        }
+		if (no == null) {
+			return maior;
+		}
 
-        if (no.getInfo().getIdade() > maior.getIdade()) {
-            maior = no.getInfo();
-        }
+		if (no.getInfo().getIdade() > maior.getIdade()) {
+			maior = no.getInfo();
+		}
 
-        maior = clienteMaisVelho(no.getEsq(), maior);
-        maior = clienteMaisVelho(no.getDir(), maior);
+		maior = clienteMaisVelho(no.getEsq(), maior);
+		maior = clienteMaisVelho(no.getDir(), maior);
 
-        return maior;
-    }
+		return maior;
+	}
 
-    public void listarFaixaEtaria(int min, int max) {
-        listarFaixaEtaria(raiz, min, max);
-    }
-    private void listarFaixaEtaria(No no, int min, int max) {
+	public String listarFaixaEtaria(int min, int max) {
+		return listarFaixaEtaria(raiz, min, max);
+	}
 
-        if (no != null) {
+	private String listarFaixaEtaria(No no, int min, int max) {
+		if (no == null) {
+			return "";
+		}
 
-            listarFaixaEtaria(no.getEsq(), min, max);
+		String resultado = "";
 
-            if (no.getInfo().getIdade() >= min
-                    && no.getInfo().getIdade() <= max) {
+		resultado += listarFaixaEtaria(no.getEsq(), min, max);
 
-                System.out.println(no.getInfo());
-            }
+		if (no.getInfo().getIdade() >= min && no.getInfo().getIdade() <= max) {
+			resultado += no.getInfo()
+					+ "\n\n";
+		}
 
-            listarFaixaEtaria(no.getDir(), min, max);
-        }
-    }
+		resultado += listarFaixaEtaria(no.getDir(), min, max);
 
-    public boolean atualizarCliente(String nome,
-                                    int idade,
-                                    char sexo,
-                                    double saldo) {
+		return resultado;
+	}
 
-        No cliente = pesquisarNome(nome, raiz);
+	public boolean atualizarCliente(String nome,
+			int idade,
+			char sexo,
+			double saldo) {
 
-        if (cliente == null) {
-            return false;
-        }
+		No cliente = pesquisarNome(nome, raiz);
 
-        cliente.getInfo().setIdade(idade);
-        cliente.getInfo().setSexo(sexo);
-        cliente.getInfo().setSaldo(saldo);
+		if (cliente == null) {
+			return false;
+		}
 
-        return true;
-    }
+		cliente.getInfo().setIdade(idade);
+		cliente.getInfo().setSexo(sexo);
+		cliente.getInfo().setSaldo(saldo);
 
-    public void camCentral() {
-        camCentral(raiz);
-    }
-    private void camCentral(No no) {
+		return true;
+	}
 
-        if (no != null) {
+	public void camCentral() {
+		camCentral(raiz);
+	}
+	private void camCentral(No no) {
 
-            camCentral(no.getEsq());
+		if (no != null) {
 
-            System.out.println(no.getInfo());
+			camCentral(no.getEsq());
 
-            camCentral(no.getDir());
-        }
-    }
+			System.out.println(no.getInfo());
+
+			camCentral(no.getDir());
+		}
+	}
 }
